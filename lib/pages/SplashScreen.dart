@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/login.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -29,8 +30,11 @@ class SplashScreen extends StatelessWidget {
             ),
             InkWell(
                 onTap: () {
-                  Navigator.pushReplacementNamed(context,
-                      "homePage"); //Won't go back to this screen again becaused I used pushed replacement
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const LoginPageWrapper()));//Won't go back to this screen again becaused I used pushed replacement
                 },
                 child: Ink(
                     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),

@@ -6,7 +6,7 @@ abstract class Global {
   static const List lights = [
     {
       'location': 'Kitchen',
-      'name': 'LED001',
+      'name': 'Pepsodent',
       'status': false,
       'position': [0.0, 0.0],
       'tile': 1,
