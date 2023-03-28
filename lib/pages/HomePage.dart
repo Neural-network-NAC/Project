@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/Floorplan/core/core/view/view/screens/floorplan_screen.dart';
+import 'package:project/Floorplan/core/core/viewmodels/floorplan_model.dart';
 import 'package:project/pages/SplashScreen.dart';
 import 'package:project/pages/mainscreen.dart';
 import 'package:project/widgets/CategoriesWidget.dart';
@@ -23,6 +24,9 @@ class HomePage extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      
+                      
+                      
                       Container(
                         child: IconButton(
                             onPressed: () {
@@ -38,6 +42,30 @@ class HomePage extends StatelessWidget {
                               size: 30,
                             )),
                       ),
+
+                //       InkWell(
+                // onTap: () {
+                //   Navigator.pushReplacementNamed(context,
+                //       "floorplan_screen"); //Won't go back to this screen again becaused I used pushed replacement
+                // },
+                // child: Ink(
+                //     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(30),
+                //         color: Color(0xff00A368)),
+                //     child: Text(
+                //       "Get Started",
+                //       style: TextStyle(
+                //         color: Colors.white,
+                //         fontSize: 18,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ))),
+
+
+
+
+                      
 
                       // Icon(
 

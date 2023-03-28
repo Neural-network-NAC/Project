@@ -91,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
               // GallerySaver.saveImage(ImagePath);
               File selectedImage = File(ImagePath);
               final request = http.MultipartRequest("POST",
-                  Uri.parse("https://4fc3-49-36-122-221.in.ngrok.io/upload"));
+                  Uri.parse("https://4491-49-36-113-17.in.ngrok.io/upload"));
               final headers = {"Content-type": "multipart/form-data"};
               request.files.add(http.MultipartFile(
                   'image',
