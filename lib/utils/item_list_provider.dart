@@ -24,4 +24,13 @@ class ItemListProvider extends ChangeNotifier {
       }
     }
   }
+
+  int findIndexByName(Item item) {
+    for (int i = 0; i < items.length; i++) {
+      if (items[i].name == item.name) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }

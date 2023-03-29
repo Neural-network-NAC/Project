@@ -268,13 +268,120 @@ class _MainScreenState extends State<MainScreen> {
                                             IconButton(
                                               padding: EdgeInsets.zero,
                                               iconSize: 15,
-                                              onPressed: () async {},
+                                              onPressed: () async {
+                                                Item tempItem = Item(
+                                                    name: i['product_name'],
+                                                    description:
+                                                        i['description'],
+                                                    price: double.parse(
+                                                        i['price'].toString()),
+                                                    quantity: 1,
+                                                    availableQuantity:
+                                                        i['quantity']);
+                                                int tempInt = Provider.of<
+                                                            ItemListProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .findIndexByName(tempItem);
+                                                if (tempInt == -1) {
+                                                  Provider.of<ItemListProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .addItem(tempItem);
+                                                  await addItem(tempItem);
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              "Item added to cart")));
+                                                } else {
+                                                  tempItem = Provider.of<
+                                                              ItemListProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .items[tempInt];
+                                                  if (tempItem.quantity < 999) {
+                                                    if (tempItem
+                                                        .checkQuantity()) {
+                                                      //item.quantity++;
+                                                      Provider.of<ItemListProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .items[tempInt]
+                                                          .quantity++;
+                                                    }
+                                                    updateItemQuantity(
+                                                        tempInt,
+                                                        Provider.of<ItemListProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .items[tempInt]
+                                                            .quantity);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                "Item quantity updated in cart")));
+                                                  }
+                                                }
+                                              },
                                               icon: Icon(Icons.add),
                                             ),
                                             IconButton(
                                               padding: EdgeInsets.zero,
                                               iconSize: 15,
-                                              onPressed: () async {},
+                                              onPressed: () async {
+                                                Item tempItem = Item(
+                                                    name: i['product_name'],
+                                                    description:
+                                                        i['description'],
+                                                    price: double.parse(
+                                                        i['price'].toString()),
+                                                    quantity: 1,
+                                                    availableQuantity:
+                                                        i['quantity']);
+                                                int tempInt = Provider.of<
+                                                            ItemListProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .findIndexByName(tempItem);
+                                                if (tempInt > -1) {
+                                                  tempItem = Provider.of<
+                                                              ItemListProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .items[tempInt];
+                                                  if (tempItem.quantity > 1) {
+                                                    Provider.of<ItemListProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .items[tempInt]
+                                                        .quantity--;
+                                                    updateItemQuantity(
+                                                        tempInt,
+                                                        Provider.of<ItemListProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .items[tempInt]
+                                                            .quantity);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                "Item quantity updated in cart")));
+                                                  } else {
+                                                    Provider.of<ItemListProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .removeItem(tempItem);
+                                                    await removeItem(tempInt);
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                "Item deleted")));
+                                                  }
+                                                }
+                                              },
                                               icon: Icon(Icons.remove),
                                             )
                                           ],
