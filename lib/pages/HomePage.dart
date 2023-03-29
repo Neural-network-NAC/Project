@@ -7,11 +7,16 @@ import 'package:project/Floorplan/core/core/viewmodels/floorplan_model.dart';
 import 'package:project/pages/SplashScreen.dart';
 import 'package:project/pages/mainscreen.dart';
 import 'package:project/pages/shoppingCartPage.dart';
+import 'package:project/utils/item_list_provider.dart';
 import 'package:project/widgets/CategoriesWidget.dart';
 import 'package:badges/src/badge.dart' as badge;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../utils/item.dart';
+import '../utils/item_list_shared_prefs.dart';
 import '../widgets/ItemsWidget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -26,9 +31,6 @@ class HomePage extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      
-                      
-                      
                       Container(
                         child: IconButton(
                             onPressed: () {
@@ -45,29 +47,24 @@ class HomePage extends StatelessWidget {
                             )),
                       ),
 
-                //       InkWell(
-                // onTap: () {
-                //   Navigator.pushReplacementNamed(context,
-                //       "floorplan_screen"); //Won't go back to this screen again becaused I used pushed replacement
-                // },
-                // child: Ink(
-                //     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(30),
-                //         color: Color(0xff00A368)),
-                //     child: Text(
-                //       "Get Started",
-                //       style: TextStyle(
-                //         color: Colors.white,
-                //         fontSize: 18,
-                //         fontWeight: FontWeight.bold,
-                //       ),
-                //     ))),
-
-
-
-
-                      
+                      //       InkWell(
+                      // onTap: () {
+                      //   Navigator.pushReplacementNamed(context,
+                      //       "floorplan_screen"); //Won't go back to this screen again becaused I used pushed replacement
+                      // },
+                      // child: Ink(
+                      //     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                      //     decoration: BoxDecoration(
+                      //         borderRadius: BorderRadius.circular(30),
+                      //         color: Color(0xff00A368)),
+                      //     child: Text(
+                      //       "Get Started",
+                      //       style: TextStyle(
+                      //         color: Colors.white,
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ))),
 
                       // Icon(
 
@@ -105,7 +102,10 @@ class HomePage extends StatelessWidget {
                           badgeColor: Colors.red,
                           padding: EdgeInsets.all(7),
                           badgeContent: Text(
-                            "3",
+                            Provider.of<ItemListProvider>(context)
+                                .items
+                                .length
+                                .toString(),
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -154,6 +154,264 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(fontSize: 12),
                       ),
                       onPressed: () => FirebaseAuth.instance.signOut(),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Column(children: [
+                  Text(
+                    "What do you want to buy?",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ]),
+              ),
+
+              //Search Widget
+              Container(
+                margin: EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                height: 50,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Row(
+                  children: [
+                    Icon(Icons.search),
+                    Container(
+                      margin: EdgeInsets.only(left: 10),
+                      width: 240,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            hintText: "Search", border: InputBorder.none),
+                      ),
+                    ),
+                    Spacer(),
+                    Icon(Icons.filter_list),
+                  ],
+                ),
+              ),
+
+              // Products Widgets
+
+              Container(
+                margin: EdgeInsets.all(8),
+                //margin: EdgeInsets.only(top: 15, bottom: 20),
+                padding: EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                    // bottomLeft: Radius.circular(30),
+                    // bottomRight: Radius.circular(30),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CategoriesWidget(),
+                  ],
+                ),
+              ),
+
+              Container(
+                margin: EdgeInsets.all(8),
+                //margin: EdgeInsets.only(top: 15, bottom: 20),
+                padding: EdgeInsets.only(top: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                    // bottomLeft: Radius.circular(30),
+                    // bottomRight: Radius.circular(30),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ItemsWidget(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  Future<void> sharedPrefsInit() async {
+    List<Item> _items = await getItems();
+    if (mounted) {
+      for (Item _item in _items) {
+        Provider.of<ItemListProvider>(context, listen: false).addItem(_item);
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    sharedPrefsInit();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+    return Scaffold(
+      backgroundColor: Color(0XFF00A368),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(right: 20, left: 15, top: 10),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FloorPlanScreen()),
+                              );
+                            },
+                            icon: Icon(
+                              CupertinoIcons.map,
+                              color: Colors.white,
+                              size: 30,
+                            )),
+                      ),
+
+                      //       InkWell(
+                      // onTap: () {
+                      //   Navigator.pushReplacementNamed(context,
+                      //       "floorplan_screen"); //Won't go back to this screen again becaused I used pushed replacement
+                      // },
+                      // child: Ink(
+                      //     padding: EdgeInsets.symmetric(horizontal: 80, vertical: 16),
+                      //     decoration: BoxDecoration(
+                      //         borderRadius: BorderRadius.circular(30),
+                      //         color: Color(0xff00A368)),
+                      //     child: Text(
+                      //       "Get Started",
+                      //       style: TextStyle(
+                      //         color: Colors.white,
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ))),
+
+                      // Icon(
+
+                      //   CupertinoIcons.camera,
+                      //   color: Colors.white,
+                      //   size: 30,
+                      // ),
+                      Container(
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const MainScreen()),
+                              );
+                            },
+                            icon: Icon(
+                              CupertinoIcons.camera,
+                              color: Colors.white,
+                              size: 30,
+                            )),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: Color(0XFF00A368),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.5),
+                                blurRadius: 2,
+                              ),
+                            ]),
+                        child: badge.Badge(
+                          badgeColor: Colors.red,
+                          padding: EdgeInsets.all(7),
+                          badgeContent: Text(
+                            Provider.of<ItemListProvider>(context)
+                                .items
+                                .length
+                                .toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ShoppingCartScreen()),
+                              );
+                            },
+                            child: Icon(
+                              CupertinoIcons.cart,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+              ),
+
+              //Welcome and What do you want to buy.
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      "Signed in as: ${user.email}",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.green)),
+                      icon: Icon(Icons.arrow_back),
+                      label: Text(
+                        'Sign Out',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      onPressed: () {
+                        Provider.of<ItemListProvider>(context, listen: false)
+                            .items = [];
+                        FirebaseAuth.instance.signOut();
+                      },
                     ),
                   ],
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project/pages/HomePage.dart';
 import 'package:project/pages/signUp.dart';
 import 'package:project/utils/utlils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 
@@ -63,12 +64,22 @@ class _LoginWidgetState extends State<LoginWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  Future<void> sharedPrefsReset() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+  }
+
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    sharedPrefsReset();
   }
 
   @override

@@ -7,10 +7,12 @@ import 'package:project/pages/HomePage.dart';
 // import 'package:project/pages/login_register_page.dart';
 import 'package:project/pages/mainscreen.dart';
 import 'package:project/utils/item_list_provider.dart';
+import 'package:project/utils/item_list_shared_prefs.dart';
 import 'package:project/utils/utlils.dart';
 import 'package:provider/provider.dart';
 import 'pages/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'utils/item.dart';
 import 'widget_tree.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:project/pages/shoppingCartPage.dart';
@@ -20,32 +22,62 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
+// class MyApp2 extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiProvider(
+//         providers: [
+//           ChangeNotifierProvider(
+//             create: (context) => FloorPlanModel(),
+//           ),
+//           ChangeNotifierProvider(
+//             create: (context) => ItemListProvider(),
+//           )
+//         ],
+//         child: MaterialApp(
+//           scaffoldMessengerKey: Utils.messengerKey,
+//           debugShowCheckedModeBanner: false,
+//           navigatorKey: navigatorKey,
+//           routes: {
+//             "/": (context) => SplashScreen(),
+//             "homePage": (context) => HomePage(),
+//             //"floorplan_screen": (context) => FloorPlanScreen(),
+//           },
+//         ));
+//   }
+// }
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return 
-    MultiProvider(
-  providers: [
-    ChangeNotifierProvider(
-          create: (context) => FloorPlanModel(),
-          
-        ),
-    ChangeNotifierProvider(
-          create: (context) => ItemListProvider(),
-    )
-  ],
-  child:MaterialApp(
-      scaffoldMessengerKey: Utils.messengerKey,
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      routes: {
-        "/": (context) => SplashScreen(),
-        "homePage": (context) => HomePage(),
-        //"floorplan_screen": (context) => FloorPlanScreen(),
-
-      },
-    ));
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => FloorPlanModel(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ItemListProvider(),
+          )
+        ],
+        child: MaterialApp(
+          scaffoldMessengerKey: Utils.messengerKey,
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          routes: {
+            "/": (context) => SplashScreen(),
+            "homePage": (context) => HomePage(),
+            //"floorplan_screen": (context) => FloorPlanScreen(),
+          },
+        ));
   }
 }
