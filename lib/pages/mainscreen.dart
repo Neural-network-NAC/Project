@@ -91,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
               // GallerySaver.saveImage(ImagePath);
               File selectedImage = File(ImagePath);
               final request = http.MultipartRequest("POST",
-                  Uri.parse("https://4491-49-36-113-17.in.ngrok.io/upload"));
+                  Uri.parse("https://6d0e-2409-40c0-1029-3c4b-43-33be-e1a5-7a32.in.ngrok.io/upload"));
               final headers = {"Content-type": "multipart/form-data"};
               request.files.add(http.MultipartFile(
                   'image',
@@ -103,23 +103,83 @@ class _MainScreenState extends State<MainScreen> {
               http.Response res = await http.Response.fromStream(response);
               final resJson = jsonDecode(res.body);
               message = resJson['message'];
+              List<dynamic> variantsList = resJson['variants'];
               setState(() {
                 variantFiller = CarouselSlider(
                   options: CarouselOptions(height: 200.0),
-                  items: resJson['variants'].map((i) {
+                  items: variantsList.map((i) {
                     return Builder(
                       builder: (BuildContext context) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration:
-                                const BoxDecoration(color: Colors.green),
-                            child: Center(
-                              child: Text(
-                                '$i',
-                                style: const TextStyle(fontSize: 16.0),
-                              ),
-                            ));
+                        return InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () => {},
+                          child: Ink(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey[300]!,
+                                    blurRadius: 10,
+                                    spreadRadius: 5,
+                                  ),
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image.network(
+                                    // 'https://m.media-amazon.com/images/I/91eC2O5IN5L._SX679_.jpg',
+                                    i['image_link'],
+                                    height: 100,
+                                    width: 100
+                                    // widget.icon,
+                                    // color: widget.color,
+                                    ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  i['product_name'],
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat'),
+                                ),
+                                Text(
+                                  i['description'],
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat'),
+                                ),
+                                Text(
+                                  'Price: ₹ ' + i['price'].toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat'),
+                                ),
+                                Text(
+                                  'Quantity: ' + i['quantity'].toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                       },
                     );
                   }).toList(),

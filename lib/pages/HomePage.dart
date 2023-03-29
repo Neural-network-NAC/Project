@@ -1,18 +1,20 @@
 import 'package:badges/badges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project/Floorplan/core/core/view/view/screens/floorplan_screen.dart';
 import 'package:project/Floorplan/core/core/viewmodels/floorplan_model.dart';
 import 'package:project/pages/SplashScreen.dart';
 import 'package:project/pages/mainscreen.dart';
+import 'package:project/pages/shoppingCartPage.dart';
 import 'package:project/widgets/CategoriesWidget.dart';
 import 'package:badges/src/badge.dart' as badge;
-
 import '../widgets/ItemsWidget.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Scaffold(
       backgroundColor: Color(0XFF00A368),
       body: SafeArea(
@@ -109,7 +111,14 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ShoppingCartScreen()),
+                              );
+                            },
                             child: Icon(
                               CupertinoIcons.cart,
                               size: 30,
@@ -123,18 +132,31 @@ class HomePage extends StatelessWidget {
 
               //Welcome and What do you want to buy.
               Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: Column(children: [
-                  Text(
-                    "Welcome",
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                margin: EdgeInsets.symmetric(vertical: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      "Signed in as: ${user.email}",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ]),
+                    ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.green)),
+                      icon: Icon(Icons.arrow_back),
+                      label: Text(
+                        'Sign Out',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      onPressed: () => FirebaseAuth.instance.signOut(),
+                    ),
+                  ],
+                ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
