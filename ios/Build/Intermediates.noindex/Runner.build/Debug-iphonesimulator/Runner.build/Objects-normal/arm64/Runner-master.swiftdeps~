@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "da282ac2fa6a3ab6dbcb9a34d0892b2fd96a98b8b57d421e576af9d773e9bb51"
+build_start_time: [1680162566, 839664936]
+build_end_time: [1680162566, 853800058]
+inputs:
+  "/Users/namanchaware/Desktop/development/Project/ios/Runner/AppDelegate.swift": !private [1673162450, 0]

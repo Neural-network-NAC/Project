@@ -1,0 +1,21 @@
+dependencies: \
+  /Users/namanchaware/Desktop/development/Project/ios/Runner/GeneratedPluginRegistrant.m \
+  /Users/namanchaware/Desktop/development/Project/ios/Runner/GeneratedPluginRegistrant.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Modules/module.modulemap \
+  /Users/namanchaware/Desktop/development/Project/ios/Pods/Firebase/CoreOnly/Sources/module.modulemap \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterViewController.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterPluginAppLifeCycleDelegate.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterHeadlessDartRunner.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterEngineGroup.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterEngine.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterDartProject.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterCallbackCache.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterTexture.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterPlatformViews.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterCodecs.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterChannels.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterBinaryMessenger.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterPlugin.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterMacros.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/FlutterAppDelegate.h \
+  /Users/namanchaware/Desktop/development/Project/ios/Build/Products/Debug-iphonesimulator/Flutter.framework/Headers/Flutter.h
